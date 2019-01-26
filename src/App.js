@@ -27,33 +27,34 @@ const octave = [
 
 class App extends Component {
   state = {
+    screens: 1,
     randomStringIndex: null,
     randomNoteIndex: null,
     wrongGuesses: [],
-    correctGuess: ""
+    rightGuess: ""
   };
 
   highlightRandomNote = () => {
     this.setState({
       randomStringIndex: Math.floor(Math.random() * notes.length),
-      randomNoteIndex: Math.floor(Math.random() * notes[0].length)
+      randomNoteIndex: Math.floor(Math.random() * notes[0].length),
+      screens: 2
     });
   };
 
-  componentDidMount() {
-    this.highlightRandomNote();
-  }
+  // componentDidMount() {
+  //   this.highlightRandomNote();
+  // }
 
   handleNoteClick = i => {
     if (
       octave[i] ===
       notes[this.state.randomStringIndex][this.state.randomNoteIndex]
     ) {
-      this.setState({ correctGuess: octave[i] });
+      this.setState({ rightGuess: octave[i] });
     } else {
       this.setState(state => {
         const updatedWrongGuesses = [...state.wrongGuesses, octave[i]];
-        console.log("updatedWrongGuesses:", updatedWrongGuesses);
         return { wrongGuesses: updatedWrongGuesses };
       });
     }
@@ -61,69 +62,135 @@ class App extends Component {
 
   render() {
     const allStrings = [];
-    const answersString = [];
+    const answerString = [];
     const {
+      screens,
       randomStringIndex,
       randomNoteIndex,
       wrongGuesses,
-      correctGuess
+      rightGuess
     } = this.state;
 
-    for (let i = 0; i < notes.length; i++) {
-      const stringToRender = [];
+    // Render overlay.
+    let overlayClasses = "";
 
-      for (let j = 0; j < notes[i].length; j++) {
-        if (i === randomStringIndex && j === randomNoteIndex) {
-          stringToRender.push(
-            <li className="string-item is-highlighted" key={`${i}-${j}`}>
-              <button>{notes[i][j]}</button>
-            </li>
-          );
+    if (screens === 1) {
+      overlayClasses = "strings-overlay";
+    } else if (screens === 2) {
+      overlayClasses = "strings-overlay is-hidden";
 
-          console.log("highlighted:", notes[i][j]);
-        } else {
+      // Render guitar strings when the game is started.
+      for (let i = 0; i < notes.length; i++) {
+        const stringToRender = [];
+        let stringButtonClasses = "";
+        for (let j = 0; j < notes[i].length; j++) {
+          // Highlight randomly picked note.
+          if (i === randomStringIndex && j === randomNoteIndex) {
+            stringButtonClasses = "string-item is-highlighted";
+            console.log("highlighted:", notes[i][j]);
+          } else {
+            stringButtonClasses = "string-item";
+          }
           stringToRender.push(
-            <li className="string-item" key={`${i}-${j}`}>
+            <li className={stringButtonClasses} key={`${i}-${j}`}>
               <button>{notes[i][j]}</button>
             </li>
           );
         }
+
+        allStrings.push(
+          <ul className="string" key={i}>
+            {stringToRender}
+          </ul>
+        );
       }
 
-      allStrings.push(
-        <ul className="string" key={i}>
-          {stringToRender}
-        </ul>
-      );
-    }
+      for (let i = 0; i < octave.length; i++) {
+        let buttonClasses = "";
+        const isWrongGuesses = wrongGuesses.includes(octave[i]);
+        const isRightGuess = rightGuess === octave[i];
 
-    for (let i = 0; i < octave.length; i++) {
-      let buttonClasses = "";
-      // const isWrongGuess = wrongGuesses.indexOf(octave[i]) >= 0;
-      const isWrongGuess = wrongGuesses.includes(octave[i]);
-      const isCorrectGuess = correctGuess === octave[i];
+        if (isWrongGuesses) {
+          buttonClasses = "is-wrong";
+        } else if (isRightGuess) {
+          buttonClasses = "is-correct";
+        }
 
-      if (isWrongGuess) {
-        buttonClasses = "is-wrong";
-      } else if (isCorrectGuess) {
-        buttonClasses = "is-correct";
+        answerString.push(
+          <li key={i}>
+            <button
+              onClick={() => this.handleNoteClick(i)}
+              className={buttonClasses}
+            >
+              {octave[i]}
+            </button>
+          </li>
+        );
       }
-      answersString.push(
-        <li key={i}>
-          <button
-            className={buttonClasses}
-            onClick={() => this.handleNoteClick(i)}
-          >
-            {octave[i]}
-          </button>
-        </li>
-      );
     }
+
+    const stringsOverlay = (
+      <div className={overlayClasses}>
+        <button className="start-button" onClick={this.highlightRandomNote}>
+          Start!
+        </button>
+      </div>
+    );
+
+    // // Render guitar strings.
+    // for (let i = 0; i < notes.length; i++) {
+    //   const stringToRender = [];
+    //   let stringButtonClasses = "";
+    //   for (let j = 0; j < notes[i].length; j++) {
+    //     // Highlight randomly picked note.
+    //     if (i === randomStringIndex && j === randomNoteIndex) {
+    //       stringButtonClasses = "string-item is-highlighted";
+    //       console.log("highlighted:", notes[i][j]);
+    //     } else {
+    //       stringButtonClasses = "string-item";
+    //     }
+    //     stringToRender.push(
+    //       <li className={stringButtonClasses} key={`${i}-${j}`}>
+    //         <button>{notes[i][j]}</button>
+    //       </li>
+    //     );
+    //   }
+
+    //   allStrings.push(
+    //     <ul className="string" key={i}>
+    //       {stringToRender}
+    //     </ul>
+    //   );
+    // }
+
+    // for (let i = 0; i < octave.length; i++) {
+    //   let buttonClasses = "";
+    //   const isWrongGuesses = wrongGuesses.includes(octave[i]);
+    //   const isRightGuess = rightGuess === octave[i];
+
+    //   if (isWrongGuesses) {
+    //     buttonClasses = "is-wrong";
+    //   } else if (isRightGuess) {
+    //     buttonClasses = "is-correct";
+    //   }
+
+    //   answerString.push(
+    //     <li key={i}>
+    //       <button
+    //         onClick={() => this.handleNoteClick(i)}
+    //         className={buttonClasses}
+    //       >
+    //         {octave[i]}
+    //       </button>
+    //     </li>
+    //   );
+    // }
 
     return (
       <div className="App">
+        {stringsOverlay}
         <div className="strings-wrapper">{allStrings}</div>
-        <ul className="defined-notes">{answersString}</ul>
+        <ul className="defined-notes">{answerString}</ul>
       </div>
     );
   }

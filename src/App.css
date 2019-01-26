@@ -103,3 +103,32 @@
   background-color: rgb(0, 228, 30);
   border: 2px solid rgb(0, 228, 30);
 }
+
+.strings-overlay {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.strings-overlay.is-hidden {
+  display: none;
+}
+
+.start-button {
+  background-color: #04e00f;
+  border: 2px solid #07b11e;
+  border-radius: 5px;
+  color: #fff;
+  display: block;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.2;
+  padding: 15px 45px;
+}
