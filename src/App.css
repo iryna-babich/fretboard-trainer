@@ -106,7 +106,7 @@
 
 .strings-overlay {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #fff;
   top: 0;
   bottom: 0;
   left: 0;
@@ -115,9 +115,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 1;
+  /* transition: opacity 2s ease-in-out; */
 }
 
 .strings-overlay.is-hidden {
+  opacity: 0;
   display: none;
 }
 
@@ -131,4 +134,10 @@
   font-weight: 900;
   line-height: 1.2;
   padding: 15px 45px;
+  /* opacity: 1; */
+  /* transition: opacity 0.8s ease-in-out; */
+}
+
+.strings-overlay.is-hidden .start-button {
+  /* opacity: 0; */
 }
