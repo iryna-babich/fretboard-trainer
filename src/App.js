@@ -25,41 +25,85 @@ const octave = [
   "B"
 ];
 
+const setRightAnswersCount = 5;
+
 class App extends Component {
+  static getRandomStringIndex() {
+    return Math.floor(Math.random() * notes.length);
+  }
+
+  static getRandomNoteIndex() {
+    return Math.floor(Math.random() * notes[0].length);
+  }
+
   state = {
     screen: 1,
     randomStringIndex: null,
     randomNoteIndex: null,
     wrongGuesses: [],
+    totalWrongGuesses: 10,
     rightGuess: "",
     rightGuessesArr: []
   };
 
-  highlightRandomNote = () => {
+  startGameHandler = () => {
     this.setState({
-      randomStringIndex: Math.floor(Math.random() * notes.length),
-      randomNoteIndex: Math.floor(Math.random() * notes[0].length),
-      screen: 2
+      screen: 2,
+      randomStringIndex: App.getRandomStringIndex(),
+      randomNoteIndex: App.getRandomNoteIndex()
+    });
+  };
+
+  restartClickHandler = () => {
+    this.setState({
+      screen: 2,
+      randomStringIndex: App.getRandomStringIndex(),
+      randomNoteIndex: App.getRandomNoteIndex(),
+      wrongGuesses: [],
+      rightGuess: "",
+      rightGuessesArr: []
     });
   };
 
   handleNoteClick = i => {
-    let wrongGuessesCount = this.state.wrongGuesses.length;
-    if (
+    const isCorrectNote =
       octave[i] ===
-      notes[this.state.randomStringIndex][this.state.randomNoteIndex]
-    ) {
-      this.setState({ rightGuess: octave[i] });
+      notes[this.state.randomStringIndex][this.state.randomNoteIndex];
+    // let wrongGuessesCount = this.state.wrongGuesses.length;
+    if (isCorrectNote) {
+      // this.setState({ rightGuess: octave[i] });
+      // If it's a correct guess, updating state, adding correct answer to the rightGuessesArr.
+      this.setState(state => {
+        const updatedrightGuessesArr = [...state.rightGuessesArr, octave[i]];
+        const resetWrongGuesses = [];
+        const rightGuessesCount = updatedrightGuessesArr.length;
+
+        // Hightlight next random note after we guessed the correct note if rightGuessArr is less than setRightAnswersCount.
+        if (rightGuessesCount < setRightAnswersCount) {
+          return {
+            wrongGuesses: resetWrongGuesses,
+            rightGuessesArr: updatedrightGuessesArr,
+            randomStringIndex: App.getRandomStringIndex(),
+            randomNoteIndex: App.getRandomNoteIndex()
+          };
+        } else {
+          return {
+            screen: 3,
+            rightGuessesArr: updatedrightGuessesArr
+          };
+        }
+      });
     } else {
       this.setState(state => {
         const updatedWrongGuesses = [...state.wrongGuesses, octave[i]];
-        wrongGuessesCount = updatedWrongGuesses.length;
+        return { wrongGuesses: updatedWrongGuesses };
+        // wrongGuessesCount = updatedWrongGuesses.length;
 
-        if (wrongGuessesCount > 4) {
-          return { wrongGuesses: updatedWrongGuesses, screen: 3 };
-        } else {
-          return { wrongGuesses: updatedWrongGuesses };
-        }
+        // if (wrongGuessesCount > 4) {
+        //   return { wrongGuesses: updatedWrongGuesses, screen: 3 };
+        // } else {
+        //   return { wrongGuesses: updatedWrongGuesses };
+        // }
       });
     }
   };
@@ -72,12 +116,14 @@ class App extends Component {
       randomStringIndex,
       randomNoteIndex,
       wrongGuesses,
-      rightGuess
+      totalWrongGuesses,
+      rightGuess,
+      rightGuessesArr
     } = this.state;
 
     const stringsOverlay = (
       <div className="strings-overlay">
-        <button className="start-button" onClick={this.highlightRandomNote}>
+        <button className="start-button" onClick={this.startGameHandler}>
           Start!
         </button>
       </div>
@@ -132,7 +178,15 @@ class App extends Component {
       );
     }
 
+    let rightGuessedNotes = rightGuessesArr.join(",");
+
     console.log("latest wrongGuesses:", this.state.wrongGuesses);
+    console.log(
+      "latest rightGuesses:",
+      this.state.rightGuessesArr,
+      this.state.rightGuessesArr.length
+    );
+    console.log("screen:", this.state.screen);
 
     // Render screen.
     if (screen === 1) {
@@ -143,13 +197,22 @@ class App extends Component {
         <div className="App">
           <div className="strings-wrapper">{allStrings}</div>
           <ul className="defined-notes">{answerString}</ul>
+          <p>Question #{this.state.rightGuessesArr.length + 1}</p>
         </div>
       );
     }
     if (screen === 3) {
       return (
         <div className="App">
-          <button>Third screen</button>
+          <h2>Your results:</h2>
+          <p>
+            Correctly guessed notes are: <strong>{rightGuessedNotes}</strong>
+          </p>
+          <p>
+            Amount of incorrectly guessed notes:
+            <strong>{totalWrongGuesses}</strong>
+          </p>
+          <button onClick={this.restartClickHandler}>Restart</button>
         </div>
       );
     }
