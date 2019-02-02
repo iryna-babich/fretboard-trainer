@@ -141,3 +141,11 @@
 .strings-overlay.is-hidden .start-button {
   /* opacity: 0; */
 }
+
+.is-correct-arr {
+  color: #07b11e;
+}
+
+.is-wrong-count {
+  color: red;
+}

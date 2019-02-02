@@ -41,7 +41,7 @@ class App extends Component {
     randomStringIndex: null,
     randomNoteIndex: null,
     wrongGuesses: [],
-    totalWrongGuesses: 10,
+    totalWrongGuessesCount: 0,
     rightGuess: "",
     rightGuessesArr: []
   };
@@ -96,7 +96,11 @@ class App extends Component {
     } else {
       this.setState(state => {
         const updatedWrongGuesses = [...state.wrongGuesses, octave[i]];
-        return { wrongGuesses: updatedWrongGuesses };
+        const updatedtotalWrongGuessesCount = state.totalWrongGuessesCount + 1;
+        return {
+          wrongGuesses: updatedWrongGuesses,
+          totalWrongGuessesCount: updatedtotalWrongGuessesCount
+        };
         // wrongGuessesCount = updatedWrongGuesses.length;
 
         // if (wrongGuessesCount > 4) {
@@ -116,7 +120,7 @@ class App extends Component {
       randomStringIndex,
       randomNoteIndex,
       wrongGuesses,
-      totalWrongGuesses,
+      totalWrongGuessesCount,
       rightGuess,
       rightGuessesArr
     } = this.state;
@@ -178,9 +182,10 @@ class App extends Component {
       );
     }
 
-    let rightGuessedNotes = rightGuessesArr.join(",");
+    let rightGuessedNotes = rightGuessesArr.join(", ");
 
     console.log("latest wrongGuesses:", this.state.wrongGuesses);
+    console.log("total wrong guesses count:", totalWrongGuessesCount);
     console.log(
       "latest rightGuesses:",
       this.state.rightGuessesArr,
@@ -206,11 +211,16 @@ class App extends Component {
         <div className="App">
           <h2>Your results:</h2>
           <p>
-            Correctly guessed notes are: <strong>{rightGuessedNotes}</strong>
+            Correctly guessed notes are:{" "}
+            <span className="is-correct-arr">
+              <strong> {rightGuessedNotes}</strong>
+            </span>
           </p>
           <p>
             Amount of incorrectly guessed notes:
-            <strong>{totalWrongGuesses}</strong>
+            <span className="is-wrong-count">
+              <strong> {totalWrongGuessesCount}</strong>
+            </span>
           </p>
           <button onClick={this.restartClickHandler}>Restart</button>
         </div>
