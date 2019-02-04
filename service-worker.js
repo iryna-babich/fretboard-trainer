@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/iryna-babich/fretboard-training-app/precache-manifest.ab0bc52f4bc454cf0450cfffbfb5754d.js"
+  "/fretboard-training-app/precache-manifest.2ed0e88ac6c60b3e9b3a7800d02d3a58.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/iryna-babich/fretboard-training-app/index.html", {
+workbox.routing.registerNavigationRoute("/fretboard-training-app/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
