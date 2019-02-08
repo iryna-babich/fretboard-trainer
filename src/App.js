@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Tone from "tone";
 import "./App.css";
 
 const notes = [
@@ -46,32 +47,48 @@ class App extends Component {
     rightGuessesArr: []
   };
 
+  playTheNote = note => {
+    var synth = new Tone.Synth().toMaster();
+
+    // play the note for the duration of an 8th note.
+    synth.triggerAttackRelease(`${note}4`, "8n");
+  };
+
+  assignNoteToGuess = () => {
+    const randomStringIndex = App.getRandomStringIndex();
+    const randomNoteIndex = App.getRandomNoteIndex();
+
+    this.playTheNote(notes[randomStringIndex][randomNoteIndex]);
+    this.setState({
+      randomStringIndex: randomStringIndex,
+      randomNoteIndex: randomNoteIndex
+    });
+  };
+
   startGameHandler = () => {
     this.setState({
-      screen: 2,
-      randomStringIndex: App.getRandomStringIndex(),
-      randomNoteIndex: App.getRandomNoteIndex()
+      screen: 2
     });
+    this.assignNoteToGuess();
   };
 
   restartClickHandler = () => {
     this.setState({
-      screen: 2,
-      randomStringIndex: App.getRandomStringIndex(),
-      randomNoteIndex: App.getRandomNoteIndex(),
       wrongGuesses: [],
       rightGuess: "",
       rightGuessesArr: []
     });
+    this.startGameHandler();
   };
 
   handleNoteClick = i => {
     const isCorrectNote =
       octave[i] ===
       notes[this.state.randomStringIndex][this.state.randomNoteIndex];
+
+    this.playTheNote(octave[i]);
     // let wrongGuessesCount = this.state.wrongGuesses.length;
     if (isCorrectNote) {
-      // this.setState({ rightGuess: octave[i] });
       // If it's a correct guess, updating state, adding correct answer to the rightGuessesArr.
       this.setState(state => {
         const updatedrightGuessesArr = [...state.rightGuessesArr, octave[i]];
@@ -80,11 +97,16 @@ class App extends Component {
 
         // Hightlight next random note after we guessed the correct note if rightGuessArr is less than setRightAnswersCount.
         if (rightGuessesCount < setRightAnswersCount) {
+          const randomStringIndex = App.getRandomStringIndex();
+          const randomNoteIndex = App.getRandomNoteIndex();
+
+          this.playTheNote(notes[randomStringIndex][randomNoteIndex]);
+
           return {
             wrongGuesses: resetWrongGuesses,
             rightGuessesArr: updatedrightGuessesArr,
-            randomStringIndex: App.getRandomStringIndex(),
-            randomNoteIndex: App.getRandomNoteIndex()
+            randomStringIndex: randomStringIndex,
+            randomNoteIndex: randomNoteIndex
           };
         } else {
           return {
@@ -101,13 +123,6 @@ class App extends Component {
           wrongGuesses: updatedWrongGuesses,
           totalWrongGuessesCount: updatedtotalWrongGuessesCount
         };
-        // wrongGuessesCount = updatedWrongGuesses.length;
-
-        // if (wrongGuessesCount > 4) {
-        //   return { wrongGuesses: updatedWrongGuesses, screen: 3 };
-        // } else {
-        //   return { wrongGuesses: updatedWrongGuesses };
-        // }
       });
     }
   };
@@ -140,6 +155,7 @@ class App extends Component {
       for (let j = 0; j < notes[i].length; j++) {
         // Highlight randomly picked note.
         if (i === randomStringIndex && j === randomNoteIndex) {
+          // this.playTheNote(notes[i][j]);
           stringButtonClasses = "string-item is-highlighted";
           console.log("highlighted:", notes[i][j]);
         } else {
@@ -213,7 +229,7 @@ class App extends Component {
           <p>
             Correctly guessed notes are:{" "}
             <span className="is-correct-arr">
-              <strong> {rightGuessedNotes}</strong>
+              <strong>{rightGuessedNotes}</strong>
             </span>
           </p>
           <p>

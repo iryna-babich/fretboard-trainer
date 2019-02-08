@@ -6,7 +6,8 @@
     "gh-pages": "^2.0.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts": "2.1.2"
+    "react-scripts": "2.1.2",
+    "tone": "^13.4.9"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -25,5 +26,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "https://github.com/iryna-babich/fretboard-training-app"
+  "homepage": "https://iryna-babich.github.io/fretboard-training-app"
 }
