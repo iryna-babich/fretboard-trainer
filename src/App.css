@@ -18,16 +18,21 @@
 }
 
 .strings-wrapper {
+  align-items: center;
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
+}
+
+.strings-wrapper--inner {
+  background: repeat-x center / contain url("./img/fretboard.jpg");
 }
 
 .string {
   display: flex;
   justify-content: space-evenly;
   margin: 10px 0;
-  padding-left: 0;
+  padding: 0 20px;
   position: relative;
   width: 800px;
 }
@@ -63,6 +68,11 @@
 
 .is-highlighted button {
   background-color: #1cbfdc;
+}
+
+.defined-notes-wrapper {
+  display: flex;
+  justify-content: center;
 }
 
 .defined-notes {

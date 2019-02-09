@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import StartScreen from "./components/StartScreen";
+import ResultScreen from "./components/ResultsScreen";
+import GameScreen from "./components/GameScreen";
 import Tone from "tone";
 import "./App.css";
 
@@ -50,7 +53,7 @@ class App extends Component {
   playTheNote = note => {
     var synth = new Tone.Synth().toMaster();
 
-    // play the note for the duration of an 8th note.
+    // Play the note for the duration of an 8th note.
     synth.triggerAttackRelease(`${note}4`, "8n");
   };
 
@@ -140,14 +143,6 @@ class App extends Component {
       rightGuessesArr
     } = this.state;
 
-    const stringsOverlay = (
-      <div className="strings-overlay">
-        <button className="start-button" onClick={this.startGameHandler}>
-          Start!
-        </button>
-      </div>
-    );
-
     // Render guitar strings.
     for (let i = 0; i < notes.length; i++) {
       const stringToRender = [];
@@ -211,34 +206,31 @@ class App extends Component {
 
     // Render screen.
     if (screen === 1) {
-      return <div className="App">{stringsOverlay}</div>;
+      return (
+        <div className="App">
+          <StartScreen startTheGame={this.startGameHandler} />
+        </div>
+      );
     }
     if (screen === 2) {
       return (
         <div className="App">
-          <div className="strings-wrapper">{allStrings}</div>
-          <ul className="defined-notes">{answerString}</ul>
-          <p>Question #{this.state.rightGuessesArr.length + 1}</p>
+          <GameScreen
+            allStringsRender={allStrings}
+            answerStringRender={answerString}
+            rightGuessesArr={rightGuessesArr}
+          />
         </div>
       );
     }
     if (screen === 3) {
       return (
         <div className="App">
-          <h2>Your results:</h2>
-          <p>
-            Correctly guessed notes are:{" "}
-            <span className="is-correct-arr">
-              <strong>{rightGuessedNotes}</strong>
-            </span>
-          </p>
-          <p>
-            Amount of incorrectly guessed notes:
-            <span className="is-wrong-count">
-              <strong> {totalWrongGuessesCount}</strong>
-            </span>
-          </p>
-          <button onClick={this.restartClickHandler}>Restart</button>
+          <ResultScreen
+            restartTheGame={this.restartClickHandler}
+            totalWrongGuessesCount={totalWrongGuessesCount}
+            rightGuessedNotes={rightGuessedNotes}
+          />
         </div>
       );
     }
