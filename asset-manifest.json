@@ -1,13 +1,14 @@
 {
-  "main.css": "/fretboard-training-app/static/css/main.03821eb1.chunk.css",
-  "main.js": "/fretboard-training-app/static/js/main.d28f60e8.chunk.js",
-  "main.js.map": "/fretboard-training-app/static/js/main.d28f60e8.chunk.js.map",
-  "static/js/1.77a45805.chunk.js": "/fretboard-training-app/static/js/1.77a45805.chunk.js",
-  "static/js/1.77a45805.chunk.js.map": "/fretboard-training-app/static/js/1.77a45805.chunk.js.map",
+  "main.css": "/fretboard-training-app/static/css/main.eefd568c.chunk.css",
+  "main.js": "/fretboard-training-app/static/js/main.f1d02b30.chunk.js",
+  "main.js.map": "/fretboard-training-app/static/js/main.f1d02b30.chunk.js.map",
+  "static/js/1.2583cce8.chunk.js": "/fretboard-training-app/static/js/1.2583cce8.chunk.js",
+  "static/js/1.2583cce8.chunk.js.map": "/fretboard-training-app/static/js/1.2583cce8.chunk.js.map",
   "runtime~main.js": "/fretboard-training-app/static/js/runtime~main.dba86450.js",
   "runtime~main.js.map": "/fretboard-training-app/static/js/runtime~main.dba86450.js.map",
-  "static/css/main.03821eb1.chunk.css.map": "/fretboard-training-app/static/css/main.03821eb1.chunk.css.map",
+  "static/media/App.css": "/fretboard-training-app/static/media/fretboard.fede0138.jpg",
+  "static/css/main.eefd568c.chunk.css.map": "/fretboard-training-app/static/css/main.eefd568c.chunk.css.map",
   "index.html": "/fretboard-training-app/index.html",
-  "precache-manifest.2ed0e88ac6c60b3e9b3a7800d02d3a58.js": "/fretboard-training-app/precache-manifest.2ed0e88ac6c60b3e9b3a7800d02d3a58.js",
+  "precache-manifest.a1c8099b36d8ccd59c551b465debee29.js": "/fretboard-training-app/precache-manifest.a1c8099b36d8ccd59c551b465debee29.js",
   "service-worker.js": "/fretboard-training-app/service-worker.js"
 }
