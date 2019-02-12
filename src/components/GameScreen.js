@@ -25,8 +25,6 @@ const octave = [
   "B"
 ];
 
-const setRightAnswersCount = 5;
-
 class GameScreen extends Component {
   static getRandomStringIndex() {
     return Math.floor(Math.random() * notes.length);
@@ -72,8 +70,9 @@ class GameScreen extends Component {
       octave[i] ===
       notes[this.state.randomStringIndex][this.state.randomNoteIndex];
 
+    const { onGameCompleted, questionsCount } = this.props;
+
     this.playTheNote(octave[i]);
-    // let wrongGuessesCount = this.state.wrongGuesses.length;
     if (isCorrectNote) {
       // If it's a correct guess, updating state, adding correct answer to the rightGuessesArr.
       this.setState(state => {
@@ -81,8 +80,8 @@ class GameScreen extends Component {
         const resetWrongGuesses = [];
         const rightGuessesCount = updatedrightGuessesArr.length;
 
-        // Hightlight next random note after we guessed the correct note if rightGuessArr is less than setRightAnswersCount.
-        if (rightGuessesCount < setRightAnswersCount) {
+        // Hightlight next random note after we guessed the correct note if rightGuessArr is less than questionsCount.
+        if (rightGuessesCount < questionsCount) {
           const randomStringIndex = GameScreen.getRandomStringIndex();
           const randomNoteIndex = GameScreen.getRandomNoteIndex();
 
@@ -95,8 +94,9 @@ class GameScreen extends Component {
             randomNoteIndex: randomNoteIndex
           };
         } else {
+          // Notify App.
+          onGameCompleted(updatedrightGuessesArr, state.totalWrongGuessesCount);
           return {
-            screen: 3,
             rightGuessesArr: updatedrightGuessesArr
           };
         }
@@ -175,8 +175,6 @@ class GameScreen extends Component {
       );
     }
 
-    let rightGuessedNotes = rightGuessesArr.join(", ");
-
     console.log("latest wrongGuesses:", this.state.wrongGuesses);
     console.log("total wrong guesses count:", totalWrongGuessesCount);
     console.log(
@@ -198,19 +196,5 @@ class GameScreen extends Component {
     );
   }
 }
-
-// const GameScreen = props => {
-//   return (
-//     <div className="fretboard-inner">
-//       <div className="strings-wrapper">
-//         <div className="strings-wrapper--inner">{props.allStringsRender}</div>
-//       </div>
-//       <div className="defined-notes-wrapper">
-//         <ul className="defined-notes">{props.answerStringRender}</ul>
-//       </div>
-//       <p>Question #{props.rightGuessesArr.length + 1}</p>
-//     </div>
-//   );
-// };
 
 export default GameScreen;
