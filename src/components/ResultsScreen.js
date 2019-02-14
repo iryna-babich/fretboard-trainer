@@ -13,7 +13,7 @@ const ResultScreen = props => {
         </span>
       </p>
       <p>
-        Incorrectly guessed notes:
+        Incorrectly guessed notes:{" "}
         <span className="is-wrong-count">
           <strong>{totalWrongGuessesCount}</strong>
         </span>

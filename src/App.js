@@ -4,18 +4,18 @@ import ResultScreen from "./components/ResultsScreen";
 import GameScreen from "./components/GameScreen";
 import "./App.css";
 
-const questionsCount = 5;
-
 class App extends Component {
   state = {
     screen: 1,
     totalWrongGuessesCount: null,
-    rightGuessesArr: []
+    rightGuessesArr: [],
+    questionsCount: null
   };
 
-  handleStartGameClick = () => {
+  handleStartGameClick = num => {
     this.setState({
-      screen: 2
+      screen: 2,
+      questionsCount: num
     });
   };
 
@@ -41,7 +41,12 @@ class App extends Component {
   };
 
   render() {
-    const { screen, totalWrongGuessesCount, rightGuessesArr } = this.state;
+    const {
+      screen,
+      totalWrongGuessesCount,
+      rightGuessesArr,
+      questionsCount
+    } = this.state;
 
     // Render screen.
     if (screen === 1) {

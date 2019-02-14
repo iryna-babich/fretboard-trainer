@@ -1,13 +1,14 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Tone from "tone";
 
 const notes = [
-  ["E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#"],
-  ["B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#"],
-  ["G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#"],
-  ["D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#"],
-  ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"],
-  ["E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#"]
+  ["E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E"],
+  ["B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
+  ["G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G"],
+  ["D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D"],
+  ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A"],
+  ["E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E"]
 ];
 
 const octave = [
@@ -125,6 +126,8 @@ class GameScreen extends Component {
       rightGuessesArr
     } = this.state;
 
+    const { questionsCount } = this.props;
+
     // Render guitar strings.
     for (let i = 0; i < notes.length; i++) {
       const stringToRender = [];
@@ -191,10 +194,16 @@ class GameScreen extends Component {
         <div className="defined-notes-wrapper">
           <ul className="defined-notes">{answerString}</ul>
         </div>
-        <p>Question #{rightGuessesArr.length + 1}</p>
+        <p>
+          Question #{rightGuessesArr.length + 1} of {questionsCount}
+        </p>
       </div>
     );
   }
 }
+
+GameScreen.propTypes = {
+  questionsCount: PropTypes.number.isRequired
+};
 
 export default GameScreen;
