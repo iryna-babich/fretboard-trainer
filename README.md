@@ -1,3 +1,15 @@
+# Fretboard Trainer App
+
+This app will help you memorize the fretboard by guessing the displayed notes.
+
+Link to the working app: https://iryna-babich.github.io/fretboard-training-app/
+
+Technologies used:
+
+- ReactJS for the logic
+- SCSS for the styles
+- Tone.js for interactive sound effects
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import StartScreen from "./components/StartScreen";
-import ResultScreen from "./components/ResultsScreen";
-import GameScreen from "./components/GameScreen";
-import "./App.css";
+import StartScreen from "./components/StartScreen/StartScreen";
+import ResultsScreen from "./components/ResultsScreen/ResultsScreen";
+import GameScreen from "./components/GameScreen/GameScreen";
+import "./App.scss";
 
 class App extends Component {
   state = {
@@ -69,7 +69,7 @@ class App extends Component {
     if (screen === 3) {
       return (
         <div className="App">
-          <ResultScreen
+          <ResultsScreen
             onGameRestarted={this.restartClickHandler}
             totalWrongGuessesCount={totalWrongGuessesCount}
             rightGuessesArr={rightGuessesArr}

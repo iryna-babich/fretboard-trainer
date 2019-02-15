@@ -1,0 +1,57 @@
+// Styles for the StartScreen component.
+.startscreen-wrapper {
+  align-items: center;
+  background-color: #fff;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 0;
+  opacity: 1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 3;
+
+  .is-hidden {
+    display: none;
+    opacity: 0;
+  }
+}
+
+.header-main {
+  font-size: 36px;
+  margin: 0 0 70px;
+}
+
+.question-options {
+  margin-bottom: 55px;
+
+  label {
+    margin-right: 10px;
+  }
+}
+
+.start-button {
+  background-color: #fc4445;
+  border: 1px solid #da3536;
+  border-radius: 5px;
+  color: #fff;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 12px 45px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease-out;
+
+  &:hover {
+    background-color: #da3536;
+  }
+  /* opacity: 1; */
+  /* transition: opacity 0.8s ease-in-out; */
+}
+
+.strings-overlay.is-hidden .start-button {
+  /* opacity: 0; */
+}

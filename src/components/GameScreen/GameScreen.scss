@@ -1,0 +1,97 @@
+// Styles for the GameScreen component.
+.strings-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.strings-wrapper--inner {
+  background: repeat-x center / contain url("../../img/fretboard.jpg");
+}
+
+.string {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px 0;
+  padding: 0 20px;
+  position: relative;
+  width: 800px;
+
+  &::before {
+    position: absolute;
+    content: "";
+    height: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    background-color: #838383;
+  }
+}
+
+.string-item {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  width: calc(1 / 12 * 100% - 10px);
+
+  &.is-highlighted {
+    button {
+      background-color: #179dc7;
+    }
+  }
+
+  button {
+    background-color: rgb(226, 250, 255);
+    border: 2px solid #179dc7;
+    border-radius: 50%;
+    display: block;
+    font-size: 0;
+    height: 40px;
+    padding: 5px;
+    width: 40px;
+    z-index: 2;
+  }
+}
+
+.defined-notes-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.defined-notes {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px 0;
+  padding-left: 0;
+  width: 800px;
+
+  li {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    width: calc(1 / 12 * 100% - 10px);
+  }
+
+  button {
+    background-color: #179dc7;
+    border-radius: 50%;
+    border-style: none;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 900;
+    display: block;
+    height: 40px;
+    padding: 5px;
+    width: 40px;
+
+    &.is-wrong {
+      background-color: #fc4445;
+    }
+
+    &.is-correct {
+      background-color: #05b56e;
+    }
+  }
+}

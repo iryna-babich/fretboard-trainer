@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./ResultsScreen.scss";
+
 const ResultScreen = props => {
   const { rightGuessesArr, totalWrongGuessesCount, onGameRestarted } = props;
   const rightAnswers = rightGuessesArr.join(", ");
