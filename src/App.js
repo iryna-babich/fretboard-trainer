@@ -70,9 +70,9 @@ class App extends Component {
       return (
         <div className="App">
           <ResultsScreen
+            questionsCount={questionsCount}
             onGameRestarted={this.restartClickHandler}
             totalWrongGuessesCount={totalWrongGuessesCount}
-            rightGuessesArr={rightGuessesArr}
           />
         </div>
       );

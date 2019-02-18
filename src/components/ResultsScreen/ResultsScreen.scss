@@ -6,3 +6,21 @@
 .is-wrong-count {
   color: #fc4445;
 }
+
+.restart-button {
+  background-color: #fc4445;
+  border: 1px solid #da3536;
+  border-radius: 5px;
+  color: #fff;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 12px 45px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease-out;
+
+  &:hover {
+    background-color: #da3536;
+  }
+}

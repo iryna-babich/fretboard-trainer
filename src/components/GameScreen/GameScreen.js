@@ -28,6 +28,8 @@ const octave = [
   "B"
 ];
 
+const verticalStr = 12;
+
 class GameScreen extends Component {
   static getRandomStringIndex() {
     return Math.floor(Math.random() * notes.length);
@@ -119,6 +121,8 @@ class GameScreen extends Component {
   render() {
     const allStrings = [];
     const answerString = [];
+    const verticalStrArr = [];
+    const markerDotsArr = [];
     const {
       randomStringIndex,
       randomNoteIndex,
@@ -157,6 +161,7 @@ class GameScreen extends Component {
       );
     }
 
+    // Render answer string.
     for (let i = 0; i < octave.length; i++) {
       let buttonClasses = "";
       const isWrongGuesses = wrongGuesses.includes(octave[i]);
@@ -180,6 +185,16 @@ class GameScreen extends Component {
       );
     }
 
+    // Render vertical stripes.
+    for (let i = 0; i < verticalStr; i++) {
+      verticalStrArr.push(<div className="vertical-stripe" key={i} />);
+    }
+
+    // Render marker dots.
+    for (let i = 0; i < verticalStr; i++) {
+      markerDotsArr.push(<div className="marker-dot" key={i} />);
+    }
+
     console.log("latest wrongGuesses:", this.state.wrongGuesses);
     console.log("total wrong guesses count:", totalWrongGuessesCount);
     console.log(
@@ -191,13 +206,17 @@ class GameScreen extends Component {
     return (
       <div className="fretboard-inner">
         <div className="strings-wrapper">
-          <div className="strings-wrapper--inner">{allStrings}</div>
+          <div className="strings-wrapper--inner">
+            <div className="vertical-stripes">{verticalStrArr}</div>
+            <div className="marker-dots">{markerDotsArr}</div>
+            <div className="strings">{allStrings}</div>
+          </div>
         </div>
         <div className="defined-notes-wrapper">
           <ul className="defined-notes">{answerString}</ul>
         </div>
         <p>
-          Question #{rightGuessesArr.length + 1} of {questionsCount}
+          Question {rightGuessesArr.length + 1} of {questionsCount}
         </p>
       </div>
     );

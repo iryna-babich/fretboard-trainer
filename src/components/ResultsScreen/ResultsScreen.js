@@ -3,24 +3,20 @@ import React from "react";
 import "./ResultsScreen.scss";
 
 const ResultScreen = props => {
-  const { rightGuessesArr, totalWrongGuessesCount, onGameRestarted } = props;
-  const rightAnswers = rightGuessesArr.join(", ");
+  const { totalWrongGuessesCount, onGameRestarted, questionsCount } = props;
   return (
     <div className="results-wrapper">
       <h2>Your results:</h2>
+      <p>Number of questions: {questionsCount}</p>
       <p>
-        Correctly guessed notes are:{" "}
-        <span className="is-correct-arr">
-          <strong>{rightAnswers}</strong>
-        </span>
-      </p>
-      <p>
-        Incorrectly guessed notes:{" "}
+        Number of mistakes:{" "}
         <span className="is-wrong-count">
           <strong>{totalWrongGuessesCount}</strong>
         </span>
       </p>
-      <button onClick={onGameRestarted}>Restart</button>
+      <button className="restart-button" onClick={onGameRestarted}>
+        Restart
+      </button>
     </div>
   );
 };

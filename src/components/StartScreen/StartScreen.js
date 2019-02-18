@@ -9,7 +9,7 @@ class StartScreen extends Component {
 
   handleNumberOfQuestions = e => {
     this.setState({
-      questionsNumber: e.target.value
+      questionsNumber: parseInt(e.target.value, 10)
     });
   };
 
@@ -17,6 +17,7 @@ class StartScreen extends Component {
     const { onStartGameClick } = this.props;
     const { questionsNumber } = this.state;
     console.log("questionsNumber:", this.state.questionsNumber);
+    console.log(typeof this.state.questionsNumber);
 
     return (
       <div className="startscreen-wrapper">
@@ -24,7 +25,9 @@ class StartScreen extends Component {
 
         <div className="strings-overlay">
           <div className="question-options">
-            <label for="questions-dropdown">Select number of questions:</label>
+            <label htmlFor="questions-dropdown">
+              Select number of questions:
+            </label>
             <select
               id="questions-dropdown"
               onChange={this.handleNumberOfQuestions}
