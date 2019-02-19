@@ -21,7 +21,7 @@ class StartScreen extends Component {
 
     return (
       <div className="startscreen-wrapper">
-        <h1 className="header-main">Fretboard Trainer App</h1>
+        <h1 className="header-main">Fretboard Trainer</h1>
 
         <div className="strings-overlay">
           <div className="question-options">
