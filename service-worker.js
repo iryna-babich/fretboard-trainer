@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/fretboard-training-app/precache-manifest.0550e540ce76928b9706b85c92c4cf63.js"
+  "/fretboard-training-app/precache-manifest.44288338aeaefe521b0aa5499345233f.js"
 );
 
 workbox.clientsClaim();
