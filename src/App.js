@@ -9,7 +9,8 @@ class App extends Component {
     screen: 1,
     totalWrongGuessesCount: null,
     rightGuessesArr: [],
-    questionsCount: null
+    questionsCount: null,
+    duration: null
   };
 
   handleStartGameClick = num => {
@@ -19,11 +20,16 @@ class App extends Component {
     });
   };
 
-  handleGameCompleted = (rightGuessesArrParam, totalWrongGuessesCountParam) => {
+  handleGameCompleted = (
+    rightGuessesArrParam,
+    totalWrongGuessesCountParam,
+    duration
+  ) => {
     this.setState({
       screen: 3,
       rightGuessesArr: rightGuessesArrParam,
-      totalWrongGuessesCount: totalWrongGuessesCountParam
+      totalWrongGuessesCount: totalWrongGuessesCountParam,
+      duration: duration
     });
   };
 
@@ -45,7 +51,8 @@ class App extends Component {
       screen,
       totalWrongGuessesCount,
       rightGuessesArr,
-      questionsCount
+      questionsCount,
+      duration
     } = this.state;
 
     // Render screen.
@@ -73,6 +80,7 @@ class App extends Component {
             questionsCount={questionsCount}
             onGameRestarted={this.restartClickHandler}
             totalWrongGuessesCount={totalWrongGuessesCount}
+            duration={duration}
           />
         </div>
       );

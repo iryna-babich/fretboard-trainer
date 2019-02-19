@@ -45,7 +45,8 @@ class GameScreen extends Component {
     wrongGuesses: [],
     totalWrongGuessesCount: 0,
     rightGuess: "",
-    rightGuessesArr: []
+    rightGuessesArr: [],
+    startTime: null
   };
 
   assignNoteToGuess = () => {
@@ -59,8 +60,15 @@ class GameScreen extends Component {
     });
   };
 
+  setStartTime = () => {
+    this.setState({
+      startTime: Date.now()
+    });
+  };
+
   componentDidMount() {
     this.assignNoteToGuess();
+    this.setStartTime();
   }
 
   playTheNote = note => {
@@ -79,6 +87,10 @@ class GameScreen extends Component {
 
     this.playTheNote(octave[i]);
     if (isCorrectNote) {
+      const startTime = this.state.startTime;
+      // Duration in seconds.
+      const duration = ((Date.now() - startTime) / 1000).toFixed(1);
+
       // If it's a correct guess, updating state, adding correct answer to the rightGuessesArr.
       this.setState(state => {
         const updatedrightGuessesArr = [...state.rightGuessesArr, octave[i]];
@@ -100,7 +112,12 @@ class GameScreen extends Component {
           };
         } else {
           // Notify App.
-          onGameCompleted(updatedrightGuessesArr, state.totalWrongGuessesCount);
+          onGameCompleted(
+            updatedrightGuessesArr,
+            state.totalWrongGuessesCount,
+            duration
+          );
+
           return {
             rightGuessesArr: updatedrightGuessesArr
           };

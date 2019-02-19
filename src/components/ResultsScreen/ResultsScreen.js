@@ -3,7 +3,13 @@ import React from "react";
 import "./ResultsScreen.scss";
 
 const ResultScreen = props => {
-  const { totalWrongGuessesCount, onGameRestarted, questionsCount } = props;
+  const {
+    totalWrongGuessesCount,
+    onGameRestarted,
+    questionsCount,
+    duration
+  } = props;
+
   return (
     <div className="results-wrapper">
       <h2>Your results:</h2>
@@ -13,6 +19,9 @@ const ResultScreen = props => {
         <span className="is-wrong-count">
           <strong>{totalWrongGuessesCount}</strong>
         </span>
+      </p>
+      <p>
+        Total time: <strong>{duration}</strong> seconds
       </p>
       <button className="restart-button" onClick={onGameRestarted}>
         Restart
