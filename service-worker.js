@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/fretboard-training-app/precache-manifest.44288338aeaefe521b0aa5499345233f.js"
+  "/fretboard-trainer/precache-manifest.1b36b9a515575e121b2d6d59d22b2682.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/fretboard-training-app/index.html", {
+workbox.routing.registerNavigationRoute("/fretboard-trainer/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
