@@ -8,19 +8,19 @@ self.__precacheManifest = [
     "url": "/fretboard-trainer/static/js/runtime~main.fc5f3ecf.js"
   },
   {
-    "revision": "1b80279da7795868afe9",
-    "url": "/fretboard-trainer/static/js/main.1b80279d.chunk.js"
+    "revision": "78103423b899790ebb7a",
+    "url": "/fretboard-trainer/static/js/main.78103423.chunk.js"
   },
   {
     "revision": "2583cce8acd23609c557",
     "url": "/fretboard-trainer/static/js/1.2583cce8.chunk.js"
   },
   {
-    "revision": "1b80279da7795868afe9",
+    "revision": "78103423b899790ebb7a",
     "url": "/fretboard-trainer/static/css/main.57b05a79.chunk.css"
   },
   {
-    "revision": "d43431308a6d16dd793a055d50127c9d",
+    "revision": "758269ca3b5162fc954a485c76abd1df",
     "url": "/fretboard-trainer/index.html"
   }
 ];
