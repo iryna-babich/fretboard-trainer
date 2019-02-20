@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./ResultsScreen.scss";
 
@@ -35,6 +36,17 @@ const ResultScreen = props => {
       </button>
     </div>
   );
+};
+
+ResultScreen.propTypes = {
+  totalWrongGuessesCount: PropTypes.number.isRequired,
+  onGameRestarted: PropTypes.func,
+  questionsCount: PropTypes.number.isRequired,
+  duration: PropTypes.number.isRequired
+};
+
+ResultScreen.defaultProps = {
+  onGameRestarted: () => {}
 };
 
 export default ResultScreen;
