@@ -9,6 +9,7 @@ Technologies used:
 - ReactJS, ES6
 - SCSS for the styles
 - Tone.js for interactive sound effects
+- Jest, Enzyme for TDD/unit tests
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
