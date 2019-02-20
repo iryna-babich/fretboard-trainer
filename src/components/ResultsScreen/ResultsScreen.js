@@ -10,6 +10,9 @@ const ResultScreen = props => {
     duration
   } = props;
 
+  const durationMinutes = Math.floor(duration / 60);
+  const durationSeconds = (duration % 60).toFixed(1);
+
   return (
     <div className="results-wrapper">
       <h2>Your results:</h2>
@@ -21,7 +24,11 @@ const ResultScreen = props => {
         </span>
       </p>
       <p>
-        Total time: <strong>{duration}</strong> seconds
+        Total time:{" "}
+        <strong>
+          {durationMinutes > 0 && `${durationMinutes} minutes `}
+          {durationSeconds} seconds
+        </strong>
       </p>
       <button className="restart-button" onClick={onGameRestarted}>
         Restart
