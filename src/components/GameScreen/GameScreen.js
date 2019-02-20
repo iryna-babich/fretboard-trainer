@@ -75,7 +75,7 @@ class GameScreen extends Component {
     var synth = new Tone.Synth().toMaster();
 
     // Play the note for the duration of an 8th note.
-    synth.triggerAttackRelease(`${note}4`, "8n");
+    synth.triggerAttackRelease(`${note}4`, "16n");
   };
 
   handleNoteClick = i => {
@@ -85,7 +85,6 @@ class GameScreen extends Component {
 
     const { onGameCompleted, questionsCount } = this.props;
 
-    this.playTheNote(octave[i]);
     if (isCorrectNote) {
       const startTime = this.state.startTime;
       // Duration in seconds.
