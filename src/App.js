@@ -50,7 +50,6 @@ class App extends Component {
     const {
       screen,
       totalWrongGuessesCount,
-      rightGuessesArr,
       questionsCount,
       duration
     } = this.state;
@@ -80,7 +79,7 @@ class App extends Component {
             questionsCount={questionsCount}
             onGameRestarted={this.restartClickHandler}
             totalWrongGuessesCount={totalWrongGuessesCount}
-            duration={parseInt(duration, 10)}
+            duration={duration}
           />
         </div>
       );

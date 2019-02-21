@@ -50,14 +50,17 @@ const ResultScreen = props => {
 };
 
 ResultScreen.propTypes = {
-  totalWrongGuessesCount: PropTypes.number.isRequired,
+  totalWrongGuessesCount: PropTypes.number,
   onGameRestarted: PropTypes.func,
-  questionsCount: PropTypes.number.isRequired,
-  duration: PropTypes.number.isRequired
+  questionsCount: PropTypes.number,
+  duration: PropTypes.number
 };
 
 ResultScreen.defaultProps = {
-  onGameRestarted: () => {}
+  onGameRestarted: () => {},
+  totalWrongGuessesCount: 0,
+  questionsCount: 0,
+  duration: 0
 };
 
 export default ResultScreen;

@@ -88,7 +88,7 @@ class GameScreen extends Component {
     if (isCorrectNote) {
       const startTime = this.state.startTime;
       // Duration in seconds.
-      const duration = ((Date.now() - startTime) / 1000).toFixed(1);
+      const duration = (Date.now() - startTime) / 1000;
 
       // If it's a correct guess, updating state, adding correct answer to the rightGuessesArr.
       this.setState(state => {
