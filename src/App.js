@@ -80,7 +80,7 @@ class App extends Component {
             questionsCount={questionsCount}
             onGameRestarted={this.restartClickHandler}
             totalWrongGuessesCount={totalWrongGuessesCount}
-            duration={duration}
+            duration={parseInt(duration, 10)}
           />
         </div>
       );
