@@ -13,6 +13,15 @@ const notes = [
   ["E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E"]
 ];
 
+const octaveIndexesArr = [
+  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4],
+  [2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+  [2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3],
+  [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3],
+  [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2]
+];
+
 const octave = [
   "C",
   "C#",
@@ -53,7 +62,11 @@ class GameScreen extends Component {
     const randomStringIndex = GameScreen.getRandomStringIndex();
     const randomNoteIndex = GameScreen.getRandomNoteIndex();
 
-    this.playTheNote(notes[randomStringIndex][randomNoteIndex]);
+    this.playTheNote(
+      notes[randomStringIndex][randomNoteIndex],
+      randomStringIndex,
+      randomNoteIndex
+    );
     this.setState({
       randomStringIndex: randomStringIndex,
       randomNoteIndex: randomNoteIndex
@@ -71,11 +84,12 @@ class GameScreen extends Component {
     this.setStartTime();
   }
 
-  playTheNote = note => {
+  playTheNote = (note, i, j) => {
     var synth = new Tone.Synth().toMaster();
+    // Play the note for the duration of an 8th note, and the note should be in a proper key depending on the string.
+    synth.triggerAttackRelease(`${note}${octaveIndexesArr[i][j]}`, "16n");
 
-    // Play the note for the duration of an 8th note.
-    synth.triggerAttackRelease(`${note}4`, "16n");
+    console.log("octave:", octaveIndexesArr[i][j]);
   };
 
   handleNoteClick = i => {
@@ -101,7 +115,11 @@ class GameScreen extends Component {
           const randomStringIndex = GameScreen.getRandomStringIndex();
           const randomNoteIndex = GameScreen.getRandomNoteIndex();
 
-          this.playTheNote(notes[randomStringIndex][randomNoteIndex]);
+          this.playTheNote(
+            notes[randomStringIndex][randomNoteIndex],
+            randomStringIndex,
+            randomNoteIndex
+          );
 
           return {
             wrongGuesses: resetWrongGuesses,
@@ -157,7 +175,6 @@ class GameScreen extends Component {
       for (let j = 0; j < notes[i].length; j++) {
         // Highlight randomly picked note.
         if (i === randomStringIndex && j === randomNoteIndex) {
-          // this.playTheNote(notes[i][j]);
           stringButtonClasses = "string-item is-highlighted";
           console.log("highlighted:", notes[i][j]);
         } else {
@@ -211,13 +228,8 @@ class GameScreen extends Component {
       markerDotsArr.push(<div className="marker-dot" key={i} />);
     }
 
-    console.log("latest wrongGuesses:", this.state.wrongGuesses);
     console.log("total wrong guesses count:", totalWrongGuessesCount);
-    console.log(
-      "latest rightGuesses:",
-      this.state.rightGuessesArr,
-      this.state.rightGuessesArr.length
-    );
+    console.log("latest rightGuesses:", this.state.rightGuessesArr);
 
     return (
       <div className="fretboard-inner">
