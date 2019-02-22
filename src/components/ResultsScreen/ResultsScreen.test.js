@@ -27,10 +27,10 @@ it("renders no minutes when duration of the game less than a minute", () => {
 
 it("renders minutes in singular form when duration of the game one minute", () => {
   const wrapper = mount(<ResultsScreen duration={70} />);
-  expect(wrapper.find(".duration-minutes").text()).toBe("1 minute");
+  expect(wrapper.find(".duration-minutes").text()).toBe("1 minute ");
 });
 
 it("renders minutes in plural form when duration of the game more than one minute", () => {
   const wrapper = mount(<ResultsScreen duration={130} />);
-  expect(wrapper.find(".duration-minutes").text()).toBe("2 minutes");
+  expect(wrapper.find(".duration-minutes").text()).toBe("2 minutes ");
 });

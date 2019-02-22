@@ -14,8 +14,12 @@ const ResultScreen = props => {
   const durationMinutes = Math.floor(duration / 60);
   const durationSeconds = (duration % 60).toFixed(1);
   const averageDuration = duration / questionsCount;
-  const averageDurationMinutes = Math.floor(averageDuration / 60);
-  const averageDurationSecondt = (averageDuration % 60).toFixed(2);
+  const averageDurationSeconds = (averageDuration % 60).toFixed(2);
+
+  let timeInMinutes = "minutes";
+  if (durationMinutes === 1) {
+    timeInMinutes = "minute";
+  }
 
   return (
     <div className="results-wrapper">
@@ -30,17 +34,17 @@ const ResultScreen = props => {
       <p>
         Total time:{" "}
         <strong>
-          {durationMinutes > 0 && `${durationMinutes} minutes `}
+          {durationMinutes > 0 && (
+            <span className="duration-minutes">
+              {durationMinutes} {timeInMinutes}{" "}
+            </span>
+          )}
           {durationSeconds} seconds
         </strong>
       </p>
 
       <p>
-        Average time per note:{" "}
-        <strong>
-          {averageDurationMinutes > 0 && `${averageDurationMinutes} minutes`}{" "}
-          {averageDurationSecondt} seconds
-        </strong>
+        Average time per note: <strong>{averageDurationSeconds} seconds</strong>
       </p>
       <button className="restart-button" onClick={onGameRestarted}>
         Restart
