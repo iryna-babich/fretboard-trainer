@@ -23,4 +23,9 @@
   &:hover {
     background-color: #da3536;
   }
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }

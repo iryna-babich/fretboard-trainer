@@ -13,13 +13,13 @@ const notes = [
   ["E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E"]
 ];
 
-const octaveIndexesArr = [
-  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4],
-  [2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-  [2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3],
-  [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3],
-  [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2]
+const octaveIndexArr = [
+  [4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5],
+  [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+  [3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+  [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4],
+  [2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+  [2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3]
 ];
 
 const octave = [
@@ -48,6 +48,11 @@ class GameScreen extends Component {
     return Math.floor(Math.random() * notes[0].length);
   }
 
+  constructor(props) {
+    super(props);
+    this.synth = null;
+  }
+
   state = {
     randomStringIndex: null,
     randomNoteIndex: null,
@@ -62,11 +67,7 @@ class GameScreen extends Component {
     const randomStringIndex = GameScreen.getRandomStringIndex();
     const randomNoteIndex = GameScreen.getRandomNoteIndex();
 
-    this.playTheNote(
-      notes[randomStringIndex][randomNoteIndex],
-      randomStringIndex,
-      randomNoteIndex
-    );
+    this.playPositionAtStringAndFret(randomStringIndex, randomNoteIndex);
     this.setState({
       randomStringIndex: randomStringIndex,
       randomNoteIndex: randomNoteIndex
@@ -80,16 +81,71 @@ class GameScreen extends Component {
   };
 
   componentDidMount() {
+    this.synth = new Tone.Synth().toMaster();
     this.assignNoteToGuess();
     this.setStartTime();
   }
 
-  playTheNote = (note, i, j) => {
-    var synth = new Tone.Synth().toMaster();
-    // Play the note for the duration of an 8th note, and the note should be in a proper key depending on the string.
-    synth.triggerAttackRelease(`${note}${octaveIndexesArr[i][j]}`, "16n");
+  playNote(note) {
+    this.synth.triggerAttackRelease(note, "16n");
+  }
 
-    console.log("octave:", octaveIndexesArr[i][j]);
+  playPositionAtStringAndFret = (i, j) => {
+    const note = notes[i][j];
+    const octave = octaveIndexArr[i][j];
+    console.log("octave:", octave);
+    this.playNote(`${note}${octave}`);
+  };
+
+  correctlyGuessedNote = i => {
+    const { onGameCompleted, questionsCount } = this.props;
+
+    const startTime = this.state.startTime;
+    // Duration in seconds.
+    const duration = (Date.now() - startTime) / 1000;
+
+    this.setState(state => {
+      const updatedrightGuessesArr = [...state.rightGuessesArr, octave[i]];
+      const resetWrongGuesses = [];
+      const rightGuessesCount = updatedrightGuessesArr.length;
+
+      // Hightlight next random note after we guessed the correct note if rightGuessArr is less than questionsCount.
+      if (rightGuessesCount < questionsCount) {
+        const randomStringIndex = GameScreen.getRandomStringIndex();
+        const randomNoteIndex = GameScreen.getRandomNoteIndex();
+
+        this.playPositionAtStringAndFret(randomStringIndex, randomNoteIndex);
+
+        return {
+          wrongGuesses: resetWrongGuesses,
+          rightGuessesArr: updatedrightGuessesArr,
+          randomStringIndex: randomStringIndex,
+          randomNoteIndex: randomNoteIndex
+        };
+      } else {
+        // Notify App.
+        onGameCompleted(
+          updatedrightGuessesArr,
+          state.totalWrongGuessesCount,
+          duration
+        );
+
+        return {
+          rightGuessesArr: updatedrightGuessesArr
+        };
+      }
+    });
+  };
+
+  wronglyGuessedNote = i => {
+    this.setState(state => {
+      const updatedWrongGuesses = [...state.wrongGuesses, octave[i]];
+      const updatedtotalWrongGuessesCount = state.totalWrongGuessesCount + 1;
+      return {
+        wrongGuesses: updatedWrongGuesses,
+        totalWrongGuessesCount: updatedtotalWrongGuessesCount
+      };
+    });
   };
 
   handleNoteClick = i => {
@@ -97,58 +153,12 @@ class GameScreen extends Component {
       octave[i] ===
       notes[this.state.randomStringIndex][this.state.randomNoteIndex];
 
-    const { onGameCompleted, questionsCount } = this.props;
-
     if (isCorrectNote) {
-      const startTime = this.state.startTime;
-      // Duration in seconds.
-      const duration = (Date.now() - startTime) / 1000;
+      this.correctlyGuessedNote(i);
 
       // If it's a correct guess, updating state, adding correct answer to the rightGuessesArr.
-      this.setState(state => {
-        const updatedrightGuessesArr = [...state.rightGuessesArr, octave[i]];
-        const resetWrongGuesses = [];
-        const rightGuessesCount = updatedrightGuessesArr.length;
-
-        // Hightlight next random note after we guessed the correct note if rightGuessArr is less than questionsCount.
-        if (rightGuessesCount < questionsCount) {
-          const randomStringIndex = GameScreen.getRandomStringIndex();
-          const randomNoteIndex = GameScreen.getRandomNoteIndex();
-
-          this.playTheNote(
-            notes[randomStringIndex][randomNoteIndex],
-            randomStringIndex,
-            randomNoteIndex
-          );
-
-          return {
-            wrongGuesses: resetWrongGuesses,
-            rightGuessesArr: updatedrightGuessesArr,
-            randomStringIndex: randomStringIndex,
-            randomNoteIndex: randomNoteIndex
-          };
-        } else {
-          // Notify App.
-          onGameCompleted(
-            updatedrightGuessesArr,
-            state.totalWrongGuessesCount,
-            duration
-          );
-
-          return {
-            rightGuessesArr: updatedrightGuessesArr
-          };
-        }
-      });
     } else {
-      this.setState(state => {
-        const updatedWrongGuesses = [...state.wrongGuesses, octave[i]];
-        const updatedtotalWrongGuessesCount = state.totalWrongGuessesCount + 1;
-        return {
-          wrongGuesses: updatedWrongGuesses,
-          totalWrongGuessesCount: updatedtotalWrongGuessesCount
-        };
-      });
+      this.wronglyGuessedNote(i);
     }
   };
 
@@ -177,14 +187,21 @@ class GameScreen extends Component {
         if (i === randomStringIndex && j === randomNoteIndex) {
           stringButtonClasses = "string-item is-highlighted";
           console.log("highlighted:", notes[i][j]);
+          stringToRender.push(
+            <li className={stringButtonClasses} key={`${i}-${j}`}>
+              <button onClick={() => this.playPositionAtStringAndFret(i, j)}>
+                {notes[i][j]}
+              </button>
+            </li>
+          );
         } else {
           stringButtonClasses = "string-item";
+          stringToRender.push(
+            <li className={stringButtonClasses} key={`${i}-${j}`}>
+              <button>{notes[i][j]}</button>
+            </li>
+          );
         }
-        stringToRender.push(
-          <li className={stringButtonClasses} key={`${i}-${j}`}>
-            <button>{notes[i][j]}</button>
-          </li>
-        );
       }
 
       allStrings.push(

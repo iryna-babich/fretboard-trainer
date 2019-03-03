@@ -180,6 +180,11 @@ ul.string {
         transform: translate(-50%, -50%);
         width: 30px;
       }
+
+      &:active,
+      &:focus {
+        outline: none;
+      }
     }
   }
 
@@ -225,6 +230,11 @@ ul.string {
     height: 40px;
     padding: 5px;
     width: 40px;
+
+    &:active,
+    &:focus {
+      outline: none;
+    }
 
     &.is-wrong {
       background-color: #fc4445;

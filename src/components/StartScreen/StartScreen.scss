@@ -51,6 +51,11 @@
   &:hover {
     background-color: #da3536;
   }
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
   /* opacity: 1; */
   /* transition: opacity 0.8s ease-in-out; */
 }
