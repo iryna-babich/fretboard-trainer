@@ -58,7 +58,10 @@ class App extends Component {
     if (screen === 1) {
       return (
         <div className="App">
-          <StartScreen onStartGameClick={this.handleStartGameClick} />
+          <StartScreen
+            onStartGameClick={this.handleStartGameClick}
+            questionsCount={questionsCount}
+          />
         </div>
       );
     }
